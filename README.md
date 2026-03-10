@@ -209,7 +209,7 @@ useSWR(key, fetcher, {
 
 ### Terminal Architecture
 
-Terminal access is delegated to [cks-terminal-mgmt](https://github.com/homelabz-eu/cks-terminal-mgmt), a dedicated microservice running on the sandboxy cluster.
+Terminal access is delegated to [cks-terminal-mgmt](https://github.com/homelabz-eu/cks-terminal-mgmt), a dedicated microservice running on the toolz cluster.
 
 **Flow**:
 ```
