@@ -60,7 +60,7 @@ const Layout = ({ children, title = 'CKS', hideHeader = false }) => {
                                 </div>
                                 <div className="flex items-center mt-3 sm:mt-0">
                                     <a
-                                        href="https://github.com/fullstack-pw/cks"
+                                        href="https://github.com/homelabz-eu/cks"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="text-gray-500 hover:text-gray-700"

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: cks-frontend
-          image: registry.fullstack.pw/library/cks-frontend:latest
+          image: registry.toolz.homelabz.eu/library/cks-frontend:latest
           envFrom:
             - configMapRef:
                 name: cks-frontend-config
@@ -53,7 +53,7 @@ spec:
           - name: app-name
             value: cks-frontend
           - name: app-url
-            value: "https://dev.cks.fullstack.pw"
+            value: "https://dev.cks.homelabz.eu"
           - name: environment
             value: "dev"
       postPromotionAnalysis:

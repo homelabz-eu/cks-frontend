@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: cks-frontend
-          image: registry.fullstack.pw/library/cks-frontend:latest
+          image: registry.toolz.homelabz.eu/library/cks-frontend:latest
           envFrom:
           - configMapRef:
               name: cks-frontend-config

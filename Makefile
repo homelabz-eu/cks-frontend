@@ -3,7 +3,7 @@
 # Variables
 APP_NAME = cks-frontend
 VERSION ?= latest
-REGISTRY ?= registry.fullstack.pw
+REGISTRY ?= registry.toolz.homelabz.eu
 IMAGE = $(REGISTRY)/$(APP_NAME):$(VERSION)
 NAMESPACE ?= cks-system
 
@@ -30,7 +30,7 @@ build: ## Build Docker image
 		--label "org.opencontainers.image.created=$(BUILD_DATE)" \
 		--label "org.opencontainers.image.revision=$(GIT_COMMIT)" \
 		--label "org.opencontainers.image.version=$(VERSION)" \
-		--label "org.opencontainers.image.source=https://github.com/fullstack-pw/cks-frontend" \
+		--label "org.opencontainers.image.source=https://github.com/homelabz-eu/cks-frontend" \
 		.
 
 .PHONY: push

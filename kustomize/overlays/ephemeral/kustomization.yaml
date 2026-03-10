@@ -7,20 +7,20 @@ resources:
   - ../../ephemeral-base
 
 images:
-  - name: registry.fullstack.pw/library/cks-frontend
+  - name: registry.toolz.homelabz.eu/library/cks-frontend
     newTag: pr-will-be-replaced
 
 patches:
   - patch: |-
       - op: replace
         path: /metadata/annotations/external-dns.alpha.kubernetes.io~1hostname
-        value: "dev.cks.fullstack.pw"
+        value: "dev.cks.homelabz.eu"
       - op: replace
         path: /spec/tls/0/hosts/0
-        value: "dev.cks.fullstack.pw"
+        value: "dev.cks.homelabz.eu"
       - op: replace
         path: /spec/rules/0/host
-        value: "dev.cks.fullstack.pw"
+        value: "dev.cks.homelabz.eu"
     target:
       kind: Ingress
       name: cks-frontend

@@ -5,14 +5,14 @@ resources:
   - ../../base
 
 images:
-  - name: registry.fullstack.pw/library/cks-frontend
+  - name: registry.toolz.homelabz.eu/library/cks-frontend
     newTag: f8bcc38ba974638c844b1d79ed085f2099bb0e54
 
 patches:
   - patch: |-
       - op: replace
         path: /spec/hosts/0
-        value: "cks.fullstack.pw"
+        value: "cks.homelabz.eu"
     target:
       kind: VirtualService
       name: cks-frontend

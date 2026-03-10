@@ -102,7 +102,7 @@ CMD ["node", "server.js"]
 **Automated Pipeline** (`.github/workflows/pipeline.yml`)
 
 Job Flow:
-1. **docker-build-and-push**: Multi-stage build, push to `registry.fullstack.pw/library/cks-frontend:latest` and commit SHA
+1. **docker-build-and-push**: Multi-stage build, push to `registry.toolz.homelabz.eu/library/cks-frontend:latest` and commit SHA
 2. **dev-deploy**: Kustomize overlay application to development cluster
 3. **versioning**: Semantic versioning from commit messages, GitHub release creation
 
@@ -125,7 +125,7 @@ Job Flow:
 ```yaml
 containers:
   - name: cks-frontend
-    image: registry.fullstack.pw/library/cks-frontend:latest
+    image: registry.toolz.homelabz.eu/library/cks-frontend:latest
     ports:
       - containerPort: 3000
     envFrom:
@@ -160,7 +160,7 @@ containers:
 ```yaml
 spec:
   hosts:
-    - dev.cks.fullstack.pw  # Overridden per environment
+    - dev.cks.homelabz.eu  # Overridden per environment
   gateways:
     - istio-system/default-gateway
   http:
@@ -209,7 +209,7 @@ useSWR(key, fetcher, {
 
 ### Terminal Architecture
 
-Terminal access is delegated to [cks-terminal-mgmt](https://github.com/fullstack-pw/cks-terminal-mgmt), a dedicated microservice running on the sandboxy cluster.
+Terminal access is delegated to [cks-terminal-mgmt](https://github.com/homelabz-eu/cks-terminal-mgmt), a dedicated microservice running on the sandboxy cluster.
 
 **Flow**:
 ```
@@ -466,7 +466,7 @@ const handleDelete = async (sessionId) => {
 - Custom hooks (5 specialized hooks)
 
 **Terminal**:
-- iframe-based rendering via [cks-terminal-mgmt](https://github.com/fullstack-pw/cks-terminal-mgmt) (ttyd)
+- iframe-based rendering via [cks-terminal-mgmt](https://github.com/homelabz-eu/cks-terminal-mgmt) (ttyd)
 
 **Content & Utilities**:
 - react-markdown 8.0 (Markdown rendering)
@@ -495,9 +495,9 @@ Key configuration via ConfigMap:
 | `LOG_LEVEL` | Logging verbosity | `DEBUG` |
 
 **Environment-Specific Values**:
-- **dev**: `https://dev.api.cks.fullstack.pw/api/v1`
-- **stg**: `https://stg.api.cks.fullstack.pw/api/v1`
-- **prod**: `https://api.cks.fullstack.pw/api/v1`
+- **dev**: `https://dev.api.cks.homelabz.eu/api/v1`
+- **stg**: `https://stg.api.cks.homelabz.eu/api/v1`
+- **prod**: `https://api.cks.homelabz.eu/api/v1`
 
 ## Repository Structure
 
@@ -598,4 +598,4 @@ cks-frontend/
 
 **Version**: 1.0.0
 **License**: Proprietary
-**Repository**: https://github.com/fullstack-pw/cks-frontend
+**Repository**: https://github.com/homelabz-eu/cks-frontend
