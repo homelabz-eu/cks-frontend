@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card, Button, StatusIndicator, LoadingState } from './common';
 
-const AdminClusterTable = ({ clusters, isLoading, onReleaseAll, isReleasing }) => {
+const AdminClusterTable = ({ clusters, isLoading, onReleaseAll, isReleasing, onDestroyPool, isDestroying, onBootstrapPool, isBootstrapping, onBootstrapCluster, bootstrappingCluster, onDestroyCluster, destroyingCluster }) => {
   if (isLoading) {
     return <LoadingState message="Loading clusters..." />;
   }
@@ -54,14 +54,32 @@ const AdminClusterTable = ({ clusters, isLoading, onReleaseAll, isReleasing }) =
     <Card>
       <div className="px-4 py-3 border-b border-gray-200 flex justify-between items-center">
         <h3 className="text-lg font-medium text-gray-900">Cluster Management</h3>
-        <Button
-          variant="danger"
-          onClick={onReleaseAll}
-          disabled={isReleasing || clusters.lockedClusters === 0}
-          isLoading={isReleasing}
-        >
-          Release All Clusters
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            variant="primary"
+            onClick={onBootstrapPool}
+            disabled={isBootstrapping || isDestroying}
+            isLoading={isBootstrapping}
+          >
+            Bootstrap Pool
+          </Button>
+          <Button
+            variant="danger"
+            onClick={onReleaseAll}
+            disabled={isReleasing || clusters.lockedClusters === 0}
+            isLoading={isReleasing}
+          >
+            Release All Clusters
+          </Button>
+          <Button
+            variant="danger"
+            onClick={onDestroyPool}
+            disabled={isDestroying || isBootstrapping}
+            isLoading={isDestroying}
+          >
+            Destroy Pool
+          </Button>
+        </div>
       </div>
 
       <div className="overflow-x-auto">
@@ -88,6 +106,9 @@ const AdminClusterTable = ({ clusters, isLoading, onReleaseAll, isReleasing }) =
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Health Check
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Actions
               </th>
             </tr>
           </thead>
@@ -127,6 +148,28 @@ const AdminClusterTable = ({ clusters, isLoading, onReleaseAll, isReleasing }) =
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {formatDate(cluster.lastHealthCheck)}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <div className="flex gap-2">
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      onClick={() => onBootstrapCluster(cluster.clusterId)}
+                      disabled={bootstrappingCluster === cluster.clusterId || destroyingCluster === cluster.clusterId || isBootstrapping}
+                      isLoading={bootstrappingCluster === cluster.clusterId}
+                    >
+                      Bootstrap
+                    </Button>
+                    <Button
+                      variant="danger"
+                      size="sm"
+                      onClick={() => onDestroyCluster(cluster.clusterId)}
+                      disabled={destroyingCluster === cluster.clusterId || bootstrappingCluster === cluster.clusterId || isDestroying}
+                      isLoading={destroyingCluster === cluster.clusterId}
+                    >
+                      Destroy
+                    </Button>
+                  </div>
                 </td>
               </tr>
             ))}

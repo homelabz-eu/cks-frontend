@@ -15,6 +15,10 @@ export default function AdminPage() {
   const [isLoadingClusters, setIsLoadingClusters] = useState(true);
   const [isLoadingSessions, setIsLoadingSessions] = useState(true);
   const [isReleasing, setIsReleasing] = useState(false);
+  const [isDestroying, setIsDestroying] = useState(false);
+  const [isBootstrapping, setIsBootstrapping] = useState(false);
+  const [bootstrappingCluster, setBootstrappingCluster] = useState(null);
+  const [destroyingCluster, setDestroyingCluster] = useState(null);
   const { error, handleError, clearError } = useError('admin');
   const toast = useToast();
 
@@ -76,6 +80,72 @@ export default function AdminPage() {
       toast.error('Failed to release clusters. Please try again.');
     } finally {
       setIsReleasing(false);
+    }
+  };
+
+  // Handle destroy pool
+  const handleDestroyPool = async () => {
+    if (!window.confirm('This will destroy ALL cluster VMs, snapshots, and resources. Continue?')) return;
+    try {
+      setIsDestroying(true);
+      await api.admin.destroyPool();
+      toast.success('Pool destroyed successfully');
+      await fetchClusters();
+      await fetchSessions();
+    } catch (err) {
+      console.error('Failed to destroy pool:', err);
+      toast.error('Failed to destroy pool. Please try again.');
+    } finally {
+      setIsDestroying(false);
+    }
+  };
+
+  // Handle bootstrap pool
+  const handleBootstrapPool = async () => {
+    if (!window.confirm('This will create all cluster VMs from scratch. This takes several minutes. Continue?')) return;
+    try {
+      setIsBootstrapping(true);
+      toast.success('Bootstrap started - this will take several minutes...');
+      await api.admin.bootstrapPool();
+      toast.success('Pool bootstrapped successfully');
+      await fetchClusters();
+      await fetchSessions();
+    } catch (err) {
+      console.error('Failed to bootstrap pool:', err);
+      toast.error('Failed to bootstrap pool. Check backend logs.');
+    } finally {
+      setIsBootstrapping(false);
+    }
+  };
+
+  const handleBootstrapCluster = async (clusterId) => {
+    if (!window.confirm(`Bootstrap ${clusterId} from scratch? This takes several minutes.`)) return;
+    try {
+      setBootstrappingCluster(clusterId);
+      toast.success(`Bootstrap started for ${clusterId}...`);
+      await api.admin.bootstrapCluster(clusterId);
+      toast.success(`${clusterId} bootstrapped successfully`);
+      await fetchClusters();
+    } catch (err) {
+      console.error(`Failed to bootstrap ${clusterId}:`, err);
+      toast.error(`Failed to bootstrap ${clusterId}. Check backend logs.`);
+    } finally {
+      setBootstrappingCluster(null);
+    }
+  };
+
+  const handleDestroyCluster = async (clusterId) => {
+    if (!window.confirm(`Destroy all resources for ${clusterId}? This will delete VMs, snapshots, and restores.`)) return;
+    try {
+      setDestroyingCluster(clusterId);
+      await api.admin.destroyCluster(clusterId);
+      toast.success(`${clusterId} destroyed successfully`);
+      await fetchClusters();
+    } catch (err) {
+      console.error(`Failed to destroy ${clusterId}:`, err);
+      toast.error(`Failed to destroy ${clusterId}. Check backend logs.`);
+    } finally {
+      setDestroyingCluster(null);
     }
   };
 
@@ -155,6 +225,14 @@ export default function AdminPage() {
           isLoading={isLoadingClusters}
           onReleaseAll={handleReleaseAllClusters}
           isReleasing={isReleasing}
+          onDestroyPool={handleDestroyPool}
+          isDestroying={isDestroying}
+          onBootstrapPool={handleBootstrapPool}
+          isBootstrapping={isBootstrapping}
+          onBootstrapCluster={handleBootstrapCluster}
+          bootstrappingCluster={bootstrappingCluster}
+          onDestroyCluster={handleDestroyCluster}
+          destroyingCluster={destroyingCluster}
         />
       </div>
 

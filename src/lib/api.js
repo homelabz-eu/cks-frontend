@@ -275,6 +275,30 @@ class ApiClient {
         }),
 
         /**
+         * Destroy all cluster resources (clean slate)
+         * @returns {Promise<Object>} - Operation result
+         */
+        destroyPool: () => this.fetchWithRetry('/admin/destroy-pool', {
+            method: 'POST'
+        }, 1, 600000),
+
+        /**
+         * Bootstrap cluster pool (create VMs from scratch)
+         * @returns {Promise<Object>} - Operation result
+         */
+        bootstrapPool: () => this.fetchWithRetry('/admin/bootstrap-pool', {
+            method: 'POST'
+        }, 1, 3600000),
+
+        bootstrapCluster: (clusterId) => this.fetchWithRetry(`/admin/clusters/${clusterId}/bootstrap`, {
+            method: 'POST'
+        }, 1, 3600000),
+
+        destroyCluster: (clusterId) => this.fetchWithRetry(`/admin/clusters/${clusterId}/destroy`, {
+            method: 'POST'
+        }, 1, 600000),
+
+        /**
          * Delete a session (admin operation)
          * @param {string} sessionId - Session ID to delete
          * @returns {Promise<null>} - Success indicator
