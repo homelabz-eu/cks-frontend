@@ -7,7 +7,7 @@ resources:
   - ../../ephemeral-base
 
 images:
-  - name: registry.toolz.homelabz.eu/library/cks-frontend
+  - name: registry.homelabz.eu/library/cks-frontend
     newTag: pr-will-be-replaced
 
 patches:

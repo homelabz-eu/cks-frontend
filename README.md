@@ -102,7 +102,7 @@ CMD ["node", "server.js"]
 **Automated Pipeline** (`.github/workflows/pipeline.yml`)
 
 Job Flow:
-1. **docker-build-and-push**: Multi-stage build, push to `registry.toolz.homelabz.eu/library/cks-frontend:latest` and commit SHA
+1. **docker-build-and-push**: Multi-stage build, push to `registry.homelabz.eu/library/cks-frontend:latest` and commit SHA
 2. **dev-deploy**: Kustomize overlay application to development cluster
 3. **versioning**: Semantic versioning from commit messages, GitHub release creation
 
@@ -125,7 +125,7 @@ Job Flow:
 ```yaml
 containers:
   - name: cks-frontend
-    image: registry.toolz.homelabz.eu/library/cks-frontend:latest
+    image: registry.homelabz.eu/library/cks-frontend:latest
     ports:
       - containerPort: 3000
     envFrom:

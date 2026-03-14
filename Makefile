@@ -3,7 +3,7 @@
 # Variables
 APP_NAME = cks-frontend
 VERSION ?= latest
-REGISTRY ?= registry.toolz.homelabz.eu
+REGISTRY ?= registry.homelabz.eu
 IMAGE = $(REGISTRY)/$(APP_NAME):$(VERSION)
 NAMESPACE ?= cks-system
 
