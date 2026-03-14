@@ -6,7 +6,7 @@ resources:
 
 images:
   - name: registry.homelabz.eu/library/cks-frontend
-    newTag: 4af5bbf56a9afd64dcd5dd2fb5dd5d3560bca36b
+    newTag: 455155c2940d993a7b2f8df07c87ad7af4d690c5
 
 patches:
   - patch: |-
